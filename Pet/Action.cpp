@@ -122,8 +122,7 @@ void PatAction::GoToWindowTop()
 	if (FindSuitWindow(hwndWindow))
 	{
 
-		HWND patHwnd = FindWindow(NULL, TEXT("DesktopPet"));	//获取宠物的句柄
-
+		HWND patHwnd = (HWND)patInstance->winId();	//获取宠物的句柄
 		// 获取目标窗口的位置
 		GetWindowsHandle handle;
 		QVector<int> local = handle.GetWindowLocal(hwndWindow);
@@ -328,12 +327,11 @@ bool PatAction::FindSuitWindow(HWND &hwndOut)
 	GetWindowsHandle handle;
 	for each (auto hwnd in handle.GetHandle())
 	{
-		//HWND hwnd = handle.GetHandle()[1];
 		char title[MAXBYTE];
 		GetWindowTextA(hwnd, title, MAXBYTE);
 		QString titleStr = QString::fromLocal8Bit(title);
 
-		if (titleStr != "TablePat")
+		if (hwnd != (HWND)patInstance->winId())
 		{
 			QVector<int> local = handle.GetWindowLocal(hwnd);
 
