@@ -130,7 +130,7 @@ void PatAction::GoToWindowTop()
 		// º”‘ÿdll
 		QFileInfo file("Dll1.dll");
 		qDebug() << file.absoluteFilePath();
-		QString str = ".//Dll1.dll";
+		QString str = ".//dll//Dll1.dll";
 		std::string str1 = str.toStdString(); //QString◊™Œ™String
 		LPCSTR strdll = str1.c_str();
 		HINSTANCE hDLL = LoadLibraryA(strdll);

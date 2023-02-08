@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
+    </Filter>
+    <Filter Include="Pet">
+      <UniqueIdentifier>{e4f4b013-c7ad-4a57-8dd8-bd4da8534d3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{854d2f92-7fde-4b17-b943-3ca5388ca69e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="DesktopPet.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+    <QtUic Include="DesktopPet.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Pet\DesktopPet.cpp">
+      <Filter>Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\FirstOpen.cpp">
+      <Filter>Main Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\main.cpp">
+      <Filter>Main Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pet\TablePat.cpp">
+      <Filter>Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="Pet\Action.cpp">
+      <Filter>Pet</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\CommomTools.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Signals.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\WindowsInfo.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="Pet\DesktopPet.h">
+      <Filter>Pet</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\FirstOpen.h">
+      <Filter>Main Files</Filter>
+    </QtMoc>
+    <QtMoc Include="Pet\TablePat.h">
+      <Filter>Pet</Filter>
+    </QtMoc>
+    <QtMoc Include="Pet\Action.h">
+      <Filter>Pet</Filter>
+    </QtMoc>
+    <QtMoc Include="Common\Signals.h">
+      <Filter>Common</Filter>
+    </QtMoc>
+    <QtMoc Include="Common\WindowsInfo.h">
+      <Filter>Common</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Common\CommomTools.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

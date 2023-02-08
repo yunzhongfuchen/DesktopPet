@@ -1,0 +1,88 @@
+<RCC>
+    <qresource prefix="/TablePatLine">
+        <file>gif/line/left/walk_left.gif</file>
+        <file>gif/line/right/walk_right.gif</file>
+        <file>gif/line/down/fly.gif</file>
+        <file>gif/line/down/suspension_left.gif</file>
+        <file>gif/line/down/suspension_right.gif</file>
+        <file>gif/line/down/suspension_top.gif</file>
+    </qresource>
+    <qresource prefix="/TablePatDot">
+        <file>gif/dot/eat/eatchicken.gif</file>
+        <file>gif/dot/eat/eatmelon.gif</file>
+        <file>gif/dot/eat/milk.gif</file>
+        <file>gif/dot/eat/cry.gif</file>
+        <file>gif/dot/eat/milktoyue.gif</file>
+        <file>gif/dot/eat/eatpizza.gif</file>
+        <file>gif/dot/eat/eatburger.gif</file>
+        <file>gif/dot/random/random1.gif</file>
+        <file>gif/dot/random/random2.gif</file>
+        <file>gif/dot/random/random3.gif</file>
+        <file>gif/dot/random/random4.gif</file>
+        <file>gif/dot/random/random5.gif</file>
+        <file>gif/dot/random/random6.gif</file>
+        <file>gif/dot/random/random7.gif</file>
+    </qresource>
+    <qresource prefix="/TablePatSurface">
+        <file>gif/surface/fly.gif</file>
+    </qresource>
+    <qresource prefix="/TablePatOther">
+        <file>gif/other/push.gif</file>
+        <file>gif/other/happy.gif</file>
+        <file>gif/other/proud.gif</file>
+        <file>gif/other/suspension_left.gif</file>
+        <file>gif/other/suspension_right.gif</file>
+        <file>gif/other/suspension_top.gif</file>
+        <file>gif/other/teachone.gif</file>
+        <file>gif/other/teachfore.gif</file>
+        <file>gif/other/teachthree.gif</file>
+        <file>gif/other/teachtwo.gif</file>
+        <file>gif/other/hi.gif</file>
+        <file>gif/other/newyear.gif</file>
+    </qresource>
+    <qresource prefix="/random">
+        <file>gif/random/random_dot/random1.gif</file>
+        <file>gif/random/random_dot/random2.gif</file>
+        <file>gif/random/random_dot/random3.gif</file>
+        <file>gif/random/random_dot/random4.gif</file>
+        <file>gif/random/random_dot/random5.gif</file>
+        <file>gif/random/random_dot/random6.gif</file>
+        <file>gif/random/random_dot/random7.gif</file>
+        <file>gif/random/random_move/left/walk_left.gif</file>
+        <file>gif/random/random_move/right/walk_right.gif</file>
+    </qresource>
+    <qresource prefix="/eat">
+        <file>gif/eat/cry.gif</file>
+        <file>gif/eat/eatburger.gif</file>
+        <file>gif/eat/eatchicken.gif</file>
+        <file>gif/eat/eatmelon.gif</file>
+        <file>gif/eat/eatpizza.gif</file>
+        <file>gif/eat/milk.gif</file>
+        <file>gif/eat/milktoyue.gif</file>
+        <file>gif/eat/happy.gif</file>
+    </qresource>
+    <qresource prefix="/drag">
+        <file>gif/drag/push.gif</file>
+    </qresource>
+    <qresource prefix="/suspension">
+        <file>gif/suspension/suspension_left.gif</file>
+        <file>gif/suspension/suspension_right.gif</file>
+        <file>gif/suspension/suspension_top.gif</file>
+    </qresource>
+    <qresource prefix="/down">
+        <file>gif/down/fly.gif</file>
+    </qresource>
+    <qresource prefix="/ontop">
+        <file>gif/ontop/proud.gif</file>
+    </qresource>
+    <qresource prefix="/towindowstop">
+        <file>gif/towindowstop/fly.gif</file>
+    </qresource>
+    <qresource prefix="/none">
+        <file>gif/none/teachfore.gif</file>
+        <file>gif/none/teachone.gif</file>
+        <file>gif/none/teachthree.gif</file>
+        <file>gif/none/teachtwo.gif</file>
+        <file>gif/none/hi.gif</file>
+    </qresource>
+</RCC>
