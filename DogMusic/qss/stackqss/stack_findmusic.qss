@@ -1,0 +1,153 @@
+QLabel#numlabel
+{
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: 550;
+    border: none;
+}
+
+QTabWidget#SingleSongTabwidget:pane
+{
+    top: 10px;
+    border: none;
+}
+
+/*Tab基本的设置*/
+QTabBar#SingleSongTabBar:tab
+{
+    background: white;
+    border-bottom: 3px solid rgb(255,255,255);
+
+    font-family: "微软雅黑";
+    font-weight: 200;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 10px;
+
+    font-size: 17px;
+    min-height: 25px;
+    min-width: 50px;
+}
+
+/*Tab选中时*/
+QTabBar#SingleSongTabBar:tab:selected
+{
+    border-bottom: 3px solid rgb(235,65,65);
+    color: rgb(55,55,55);
+
+    font-weight: 550;
+    color: black;
+    min-height: 25px;
+    min-width: 50px;
+}
+
+
+
+
+
+QTableWidget#singsong_tableWidget
+{
+    border: 0px;
+    color: rgb(55,55,55);
+    background: rgb(255,255,255);
+    alternate-background-color: rgb(249,249,249);
+    selection-background-color: rgb(220,220,220);
+    selection-color: black;
+
+    border-left: 0px solid rgb(255,255,255);
+    border-right: 0px solid rgb(255,255,255);
+    border-bottom: 0px solid rgb(255,255,255);
+    border-top: 0px solid rgb(249,249,249);
+
+}
+
+QHeaderView::section
+{
+    background: white;
+    color: rgb(55,55,55);
+    border-left: 0px solid rgb(255,255,255);
+    border-right: 0px solid rgb(255,255,255);
+    border-bottom: 1px solid rgb(246,246,246);
+    border-top: 1px solid rgb(246,246,246);
+    padding-left: 3px;
+    padding-right: 10px;
+
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+/*设置列表左上角第0行第0列的那个格子的边框线*/
+QTableCornerButton::section
+{
+    background: white;
+    border-left: 0px solid rgb(255,255,255);
+    border-right: 0px solid rgb(255,255,255);
+    border-bottom: 0px solid rgb(255,255,255);
+    border-top: 0px solid rgb(255,255,255);
+    padding-left: 15px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+QMenu
+{
+    background-color: white;
+}
+
+QMenu::item
+{
+    background: white;
+    /*padding: 5px 10px;*/     /*上下，左右内边距*/
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin: 3px 3px;
+    font-size: 15px;
+}
+
+QMenu::icon
+{
+    position: absolute;
+    left: 10px;
+}
+
+QMenu::item:hover
+{
+    background-color: rgb(220,220,220);
+    color: black;
+}
+
+QMenu::item:selected
+{
+    background-color: rgb(220,220,220);
+    color: black;
+}
+
+QScrollBar::vertival
+{
+    background: white;
+    min-width: 5px;
+}
+
+QScrollBar::handle:vertical
+{
+    border-radius: 3px;
+    background-color: #f3f3f3;
+}
+
+QScrollBar::handle:vertical:hover
+{
+    border-radius: 3px;
+    background-color: #dcdcdc;
+}
+
+QScrollBar::add-line,QScrollBar::sub-line
+{
+    background:white;
+}
+
+
+

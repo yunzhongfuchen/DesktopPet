@@ -56,7 +56,7 @@ void TablePat::mousePressEvent(QMouseEvent* event)
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		
+		SignalsCore::Instance()->musicBox();
 	}
 }
 

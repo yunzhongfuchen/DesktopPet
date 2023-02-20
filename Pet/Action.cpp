@@ -8,16 +8,16 @@ PatAction::PatAction(QWidget *parent)
 	desktopWidth = pDesktopWidget->availableGeometry().width();
 	desktopHeight = pDesktopWidget->availableGeometry().height();
 
-	InitActionMap("gif/random/random_dot", randomDotMap, randomDotList);
-	InitActionMap("gif/random/random_move/left", randomMoveLeftMap, randomMoveLeftList);
-	InitActionMap("gif/random/random_move/right", randomMoveRightMap, randomMoveRightList);
-	InitActionMap("gif/eat", eatMap, eatList);
-	InitActionMap("gif/drag", dragMap, dragList);
-	InitActionMap("gif/suspension", suspensionMap, suspensionList);
-	InitActionMap("gif/down", downMap, downList);
-	InitActionMap("gif/ontop", onTopMap, onTopList);
-	InitActionMap("gif/towindowstop", toWindowsTopMap, toWindowsTopList);
-	InitActionMap("gif/none", noneMap, noneList);
+	InitActionMap("Gif/random/random_dot", randomDotMap, randomDotList);
+	InitActionMap("Gif/random/random_move/left", randomMoveLeftMap, randomMoveLeftList);
+	InitActionMap("Gif/random/random_move/right", randomMoveRightMap, randomMoveRightList);
+	InitActionMap("Gif/eat", eatMap, eatList);
+	InitActionMap("Gif/drag", dragMap, dragList);
+	InitActionMap("Gif/suspension", suspensionMap, suspensionList);
+	InitActionMap("Gif/down", downMap, downList);
+	InitActionMap("Gif/ontop", onTopMap, onTopList);
+	InitActionMap("Gif/towindowstop", toWindowsTopMap, toWindowsTopList);
+	InitActionMap("Gif/none", noneMap, noneList);
 	//connect(SignalsCore::Instance(), &SignalsCore::signal_mousePress, this, &PatAction::mousePress);
 	connect(SignalsCore::Instance(), &SignalsCore::signal_mouseRelease, this, &PatAction::mouseRelease);
 	connect(SignalsCore::Instance(), &SignalsCore::signal_mouseMove, this, &PatAction::mouseMove);
@@ -130,7 +130,7 @@ void PatAction::GoToWindowTop()
 		// º”‘ÿdll
 		QFileInfo file("Dll1.dll");
 		qDebug() << file.absoluteFilePath();
-		QString str = ".//dll//Dll1.dll";
+		QString str = ".//Dll//Dll1.dll";
 		std::string str1 = str.toStdString(); //QString◊™Œ™String
 		LPCSTR strdll = str1.c_str();
 		HINSTANCE hDLL = LoadLibraryA(strdll);

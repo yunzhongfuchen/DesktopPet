@@ -44,3 +44,8 @@ void SignalsCore::drop(QStringList pathlist)
 {
 	emit signal_drop(pathlist);
 }
+
+void SignalsCore::musicBox()
+{
+	emit signal_musicBox();
+}

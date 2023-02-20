@@ -1,0 +1,530 @@
+#include "../lib/music_playwidget.h"
+#include <QFile>
+
+using namespace std;
+const QString ApiOfGetLyricById = "http://localhost:3000/lyric?id=%1";
+
+
+music_play::music_play(QWidget *parent) :
+    QWidget(parent)
+{
+    this->hide();
+    this->setObjectName("music_playWidget");
+    this->setAttribute(Qt::WA_StyledBackground);
+
+    music_ScrollArea = new QScrollArea();
+    music_ScrollArea->setObjectName("main_ScrollArea");
+    music_ScrollArea->installEventFilter(this);
+    music_hScrollLayout = new QHBoxLayout();
+    music_ScrollArea->setLayout(music_hScrollLayout);
+
+    music_playLayout();
+
+    this->setLayout(music_playlayout);
+    this->setContentsMargins(0,0,0,0);
+    /*this->setSizePolicy(QSizePolicy::Expanding,
+                        QSizePolicy::Expanding);*/
+
+
+    QFile file(":/qss/music_playWidget.qss");
+    file.open(QIODevice::ReadOnly);
+
+    if (file.isOpen())
+    {
+        QString style;
+        style = QLatin1String(file.readAll());
+        this->setStyleSheet(style);
+    }
+
+    //图片旋转角度
+    cd_rotate = 0;
+    bofanggan_rotate = 0;
+    getSongLyricReply = nullptr;
+
+    ConnectInit();
+}
+
+void music_play::ConnectInit(void)
+{
+    //订阅搜索网络歌词
+    PSEventController::subscribe(this,EVENT_FINDMUSICLYRIC);
+
+    //歌词更新定时器
+    QTimer *timer = new QTimer();
+    connect(timer,SIGNAL(timeout()),
+            this,SLOT(LyricUpdate_TimerOut()));
+    timer->start(100);
+
+    //动画定时器
+    animation_Timer = new QTimer();
+    connect(animation_Timer,SIGNAL(timeout()),
+            this,SLOT(Animation_TimerOut()));
+    animation_Timer->start(50);
+}
+
+void music_play::on_psEvent_findmusicLyric(QString lyric)
+{
+    AnalysicLyric(&lyric);
+}
+
+void music_play::Animation_TimerOut(void)
+{
+    if(music_player->state() == QMediaPlayer::PlayingState)
+    {
+        cd_rotate = (++cd_rotate)%360;
+        if (bofanggan_rotate < 25)
+        {
+            bofanggan_rotate+=5;
+        }
+    }
+    else if (music_player->state() == QMediaPlayer::StoppedState)
+    {
+        if (bofanggan_rotate >0)
+        {
+            bofanggan_rotate-=5;
+        }
+    }
+    else if (music_player->state() == QMediaPlayer::PausedState)
+    {
+        if (bofanggan_rotate >0)
+        {
+            bofanggan_rotate-=5;
+        }
+    }
+
+    //this->update();
+    this->music_ScrollArea->update();
+}
+
+void music_play::music_playLayout(void)
+{
+    music_playlayout = new QHBoxLayout();
+    music_playlayout->addWidget(music_ScrollArea);
+    music_playlayout->setContentsMargins(0,0,0,0);
+
+    QSpacerItem *leftSpacer = new QSpacerItem(30,525,
+                                              QSizePolicy::Expanding,
+                                              QSizePolicy::Expanding);
+    QSpacerItem *rightSpacer = new QSpacerItem(30,525,
+                                               QSizePolicy::Expanding,
+                                               QSizePolicy::Expanding);
+
+    Lefd_cdWidget();
+    Right_lyricWidget();
+
+    QHBoxLayout *play_layout = new QHBoxLayout();
+    play_layout->addLayout(cd_layout);
+    play_layout->addSpacing(100);
+    play_layout->addLayout(lyric_layout);
+
+
+    music_hScrollLayout->addSpacerItem(leftSpacer);
+    music_hScrollLayout->addLayout(play_layout);
+    music_hScrollLayout->addSpacerItem(rightSpacer);
+}
+
+void music_play::Lefd_cdWidget(void)
+{
+    cd_label = new QLabel();
+    cd_label->setObjectName("cd_Button");
+    cd_label->setMaximumSize(350,350);
+    cd_label->setMinimumSize(350,350);
+
+    /*QImage Image;
+    Image.load(":/images/music_play/heijiaopian.png");
+    QPixmap pixmap = QPixmap::fromImage(Image);
+    QPixmap fitpixmap = pixmap.scaled(350,350,
+                                      Qt::IgnoreAspectRatio,
+                                      Qt::SmoothTransformation);
+
+    cd_label->setPixmap(fitpixmap);
+    cd_label->setAlignment(Qt::AlignCenter);*/
+
+    QHBoxLayout *button_layout = new QHBoxLayout();
+
+    for(int i=0;i<4;i++)
+    {
+        music_button[i] = new QPushButton();
+        music_button[i]->setMaximumSize(30,30);
+        music_button[i]->setMinimumSize(30,30);
+        button_layout->addWidget(music_button[i]);
+    }
+
+    cd_layout = new QVBoxLayout();
+
+    cd_layout->addWidget(cd_label);
+    cd_layout->addLayout(button_layout);
+}
+void music_play::Right_lyricWidget(void)
+{
+    lyric_display = new QTextBrowser();
+    lyric_display->setMinimumSize(400,300);
+    lyric_display->setMaximumSize(400,300);
+
+    lyric_Edit = new QTextEdit();
+    lyric_Edit->setMinimumSize(450,310);
+    lyric_Edit->setMaximumSize(450,310);
+    lyric_Edit->setReadOnly(true);
+    //禁止鼠标对文本的选中
+    lyric_Edit->setTextInteractionFlags(Qt::NoTextInteraction);
+
+    lyric_Edit->verticalScrollBar()->setMaximumWidth(7);
+
+    BlockInit();
+
+    lyric_layout = new QVBoxLayout();
+
+    MsgLayout();
+
+    lyric_layout->addLayout(message_vLayout);
+    lyric_layout->addWidget(lyric_Edit);
+    lyric_layout->setContentsMargins(0,0,0,0);
+    lyric_layout->setSpacing(0);
+}
+
+void music_play::MsgLayout(void)
+{
+    message_vLayout = new QVBoxLayout();
+    message_vLayout->setContentsMargins(0,0,0,0);
+    message_hLayout = new QHBoxLayout();
+    message_hLayout->setContentsMargins(0,0,0,0);
+
+    for (int i=0; i<4; i++)
+    {
+        msgLabel[i] = new QLabel();
+        msgLabel[i]->setObjectName(QString("msgLabel%1").arg(i));
+        if(i>0)
+        {
+            msgLabel[i]->setMaximumSize(50,20);
+            msgLabel[i]->setMinimumSize(50,20);
+        }
+        else
+        {
+            msgLabel[i]->setMinimumSize(400,50);
+            msgLabel[i]->setMaximumSize(400,50);
+        }
+    }
+
+    msgLabel[0]->setText(__QString("未知"));
+    msgLabel[1]->setText(__QString("专辑:"));
+    msgLabel[2]->setText(__QString("歌手:"));
+    msgLabel[3]->setText(__QString("来源:"));
+
+    for (int i=0; i<3; i++)
+    {
+        msgButton[i] = new QPushButton();
+        msgButton[i]->setObjectName(QString("msgButton%1").arg(i));
+        msgButton[i]->setMinimumSize(100,20);
+        msgButton[i]->setMaximumSize(100,20);
+        msgButton[i]->setText(__QString("未知"));
+    }
+
+    message_hLayout->addWidget(msgLabel[1]);
+    message_hLayout->addWidget(msgButton[0]);
+    message_hLayout->addWidget(msgLabel[2]);
+    message_hLayout->addWidget(msgButton[1]);
+    message_hLayout->addWidget(msgLabel[3]);
+    message_hLayout->addWidget(msgButton[2]);
+
+    message_vLayout->addWidget(msgLabel[0]);
+    message_vLayout->addLayout(message_hLayout);
+}
+
+void music_play::BlockInit()
+{
+    QTextBlockFormat blockFormat;
+    blockFormat.setLineHeight(10,QTextBlockFormat::LineDistanceHeight);
+    auto textCursor = lyric_Edit->textCursor();
+
+    QTextCharFormat fmt;
+    fmt.setForeground(QColor(102,102,102));
+
+    fmt.setFont(QFont("微软雅黑",11,QFont::Normal,false));
+    textCursor.mergeCharFormat(fmt);
+
+    textCursor.setBlockFormat(blockFormat);
+    lyric_Edit->setTextCursor(textCursor);
+}
+
+void music_play::Load_lyrics(MediaObjectInfo info,QString path)
+{
+    //QFile file("/home/yang/QTDemo/cloudmusic/mp3/玫瑰花的葬礼.lrc");
+
+    qDebug() << "path:" << path;
+
+    if (info.songSource == LOCALMUSIC)
+    {
+        if(path == nullptr)
+            return;
+        QFile file(path);
+
+        if(!file.exists())
+        {
+            return ;
+        }
+
+        if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+            qDebug() << "false";
+
+        QString lyric = file.readAll();
+
+        AnalysicLyric(&lyric);
+
+        file.close();
+    }
+    else if (info.songSource == NETWORKMUSIC)
+    {
+        GetSongLyricBySongId(info.songId);
+    }
+}
+
+
+void music_play::GetSongLyricBySongId(QString Id)
+{
+    QString url = ApiOfGetLyricById.arg(Id);
+    NetWorkManager::get(url, GetLyric_Reply,this);
+}
+
+void music_play::GetLyric_Reply(int errCode, const QByteArray& bytes, void* pCusData, QString msg)
+{
+    music_play *p_musicplay = reinterpret_cast<music_play*>(pCusData);
+
+    if (errCode == E_NetTimeOut)
+    {
+        qDebug() << "Reply_timeout";
+    }
+    else if (errCode == E_NetReplyError)
+    {
+        qDebug() << "Reply_error";
+    }
+    else if (errCode == E_NetOK)
+    {
+        QByteArray array = bytes;
+        QJsonParseError jsonError;
+        QJsonDocument json = QJsonDocument::fromJson(bytes, &jsonError);
+
+        if (jsonError.error == QJsonParseError::NoError)
+        {
+            if (json.isObject())
+            {
+                QJsonObject obj = json.object();
+                QJsonValue val = obj.value("lrc");
+                QJsonObject obj1 = val.toObject();
+                p_musicplay->songLyric = obj1["lyric"].toString();
+
+                p_musicplay->AnalysicLyric(&p_musicplay->songLyric);
+                //PSEventController::publish(EVENT_FINDMUSICLYRIC,Q_ARG(QString,songLyric));
+            }
+        }
+        else
+        {
+            qDebug() << "JSON_ERROR:" << jsonError.error;
+        }
+    }
+    p_musicplay = nullptr;
+}
+
+
+void music_play::AnalysicLyric(const QString *lyricString)
+{
+    QString lyric = *lyricString;
+    QStringList lrclist = lyric.split("\n");
+
+    lyric_Edit->clear();
+    BlockInit();
+
+    size = lrclist.size();
+
+    QRegularExpression rex("\\[(ar)?(ti)?(al)?(by)?(offset)?(\\d+)?:(\\d+)?(\\.\\d+)?(\\S+)?\\]");
+
+    lrcMap.clear();
+
+    for(int i=0;i<lrclist.size()-1;i++)
+    {
+        QString lrc= lrclist.at(i);
+        //qDebug() << "befor:" << lrclist.at(i);
+        QRegExp RegExp = QRegExp("\\[\\d\\d\\S\\d\\d\\S\\d\\d\\d\\]");
+
+        bool match = RegExp.indexIn(lrclist.at(i));
+        if (match == false)
+        {
+            int s_1 = lrc.mid(1,2).toInt(); //分
+            int s_2 = lrc.mid(4,2).toInt(); //秒
+            int s_3 = lrc.mid(7,2).toInt(); //厘秒
+
+            int lrctime = (s_1*60+s_2)*100+s_3;
+
+            QString lrcstr = lrc.mid(11);
+            //qDebug() << "time" << lrctime << "lrc:" << lrcstr;
+            lyric_Edit->append(lrcstr);
+            lrcMap.insert(lrctime,lrcstr);
+        }
+
+        RegExp = QRegExp("\\[\\d\\d\\S\\d\\d\\S\\d\\d\\]");//不知道为啥，有好几种歌词格式，就解析两种把。。。。
+
+        match = RegExp.indexIn(lrclist.at(i));
+        if (match == false)
+        {
+            int s_1 = lrc.mid(1,2).toInt(); //分
+            int s_2 = lrc.mid(4,2).toInt(); //秒
+            int s_3 = lrc.mid(7,2).toInt(); //厘秒
+
+            int lrctime = (s_1*60+s_2)*100+s_3;
+
+            QString lrcstr = lrc.mid(10);
+            //qDebug() << "time" << lrctime << "lrc:" << lrcstr;
+            lyric_Edit->append(lrcstr);
+            lrcMap.insert(lrctime,lrcstr);
+        }
+    }
+    lyric_Edit->moveCursor(QTextCursor::Start);
+}
+
+void music_play::LyricUpdate_TimerOut(void)
+{
+    if (lrcMap.isEmpty())
+        return ;
+    int time = music_player->position()/10;
+
+    QMap <int,QString>::iterator iter = lrcMap.begin();
+
+    while(iter != lrcMap.end())
+    {
+        QMap <int,QString>::iterator iter1 = iter;
+        iter1++;
+
+        iter1 = (iter1 == lrcMap.begin() && iter == lrcMap.end()) ? lrcMap.end() : iter1;
+
+        if((time >= iter.key()-100) && (time <= (iter1).key()))//判断一整行歌词的持续时间，这样快进的话，歌词匹配可以快速跟进
+        //if((iter.key()>=time-55) && (iter.key() <= time+55))
+        {
+            if (LyricPosition != iter.key())
+            {
+                LyricPosition = iter.key();
+                int row = std::distance(lrcMap.begin(),iter);
+
+                QTextCursor cursor = lyric_Edit->textCursor();
+                QTextCharFormat fmt;
+                fmt.setForeground(QColor(102,102,102));
+
+                fmt.setFont(QFont("微软雅黑",11,QFont::Normal,false));
+                cursor.mergeCharFormat(fmt);
+
+                QTextBlock block = lyric_Edit->document()->findBlockByNumber(row);
+                lyric_Edit->setTextCursor(QTextCursor(block));
+                lyric_Edit->find(iter.value());
+                //选中该行文字
+                cursor = lyric_Edit->textCursor();
+                fmt.setForeground(Qt::black);
+                fmt.setFont(QFont("微软雅黑",11,QFont::Bold,false));
+                cursor.mergeCharFormat(fmt);
+
+                //一行的值为34
+                int value = row*SINGLESTEP-SINGLESTEP*4;
+                value = (value < 0) ? 0 : value;
+                value = (value > SINGLESTEP*lrcMap.count() ? SINGLESTEP*lrcMap.count() : value);
+                //按照网易云的样子的话，其实文字选中和滑块滑动要分开计时，触碰滑块后重新计时，但我懒，不想做。。。
+                lyric_Edit->verticalScrollBar()->setValue(value);
+            }
+            break;
+        }
+
+        iter++;
+    }
+}
+
+bool music_play::eventFilter(QObject *watched,QEvent *event)
+{
+    Q_UNUSED(event);
+
+    //捕捉cd动画的时间
+    if (watched == this->music_ScrollArea && event->type() == QEvent::Paint)
+    {
+        QPainter painter(this->music_ScrollArea);
+        painter.save();
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        //画黑胶片
+        QPixmap pix;
+        pix.load(":/images/music_play/heijiaopian.png");
+        pix.scaled(350,350);
+        painter.translate(cd_label->pos().rx(),cd_label->pos().ry());
+        painter.translate(cd_label->width()/2,cd_label->height()/2);
+        painter.rotate(cd_rotate);
+        painter.translate(-cd_label->width()/2,-cd_label->height()/2);
+        painter.drawPixmap(0,0,cd_label->width(),cd_label->height(),pix);
+
+        painter.restore();
+
+        //画黑胶片中间的专辑图片
+        //当加载的图片特别大时，会特别卡。郁闷
+
+        painter.save();
+
+        QPixmap pix3;
+		if (pixdata == QPixmap())
+		{
+			pix3 = QPixmap(":/images/playWidget/head.png");
+		}
+		else
+		{
+			pix3 = pixdata;
+		}
+        pix3.scaled(226,226);
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        QPainterPath path;
+        painter.translate(cd_label->pos().rx(),cd_label->pos().ry());
+        path.addEllipse(cd_label->rect().center(),113,113);
+        painter.setClipPath(path);
+
+        painter.translate(cd_label->width()/2,cd_label->height()/2);
+        painter.rotate(cd_rotate);
+        painter.translate(-113,-113);
+
+        painter.drawPixmap(0,0,226,226,pix3);
+
+        painter.restore();
+
+//        painter.save();
+
+//        QPixmap pix3;
+//        pix3.loadFromData(pixdata);
+//        pix3.scaled(224,224);
+//        painter.setRenderHint(QPainter::Antialiasing);
+//        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+//        QPainterPath path;
+//        painter.translate(cd_label->pos().rx(),cd_label->pos().ry());
+//        path.addEllipse(cd_label->rect().center(),112,112);
+//        painter.setClipPath(path);
+
+//        painter.translate(cd_label->width()/2,cd_label->height()/2);
+//        painter.rotate(cd_rotate);
+//        painter.translate(-112,-112);
+
+//        painter.drawPixmap(0,0,224,224,pix3);
+
+//        painter.restore();
+
+        //画唱歌杆
+        painter.save();
+        painter.setRenderHint(QPainter::SmoothPixmapTransform);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        QPixmap pix1;
+        pix1.load(":/images/music_play/bofanggan.png");
+        pix1.scaled(300,300);
+        int x = cd_label->pos().rx()+cd_label->width()/2-150;
+        int y = cd_label->pos().ry()-195;
+        painter.translate(x,y);
+        painter.translate(150,150);
+        painter.rotate(bofanggan_rotate);
+        painter.translate(-150,-150);
+        painter.drawPixmap(0,0,300,300,pix1);
+
+        painter.restore();
+    }
+
+    return 0;
+}

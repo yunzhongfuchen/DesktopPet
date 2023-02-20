@@ -3,6 +3,8 @@
 
 #include <Windows.h>
 
+#define __QString(str) QString::fromLocal8Bit(str)
+
 class CommomTools
 {
 public:

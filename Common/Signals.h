@@ -22,6 +22,8 @@ public slots:
 	void dragEnter();
 	void dragLeave();
 	void drop(QStringList pathlist);
+
+	void musicBox();
 signals:
 	void signal_windowChange();
 
@@ -31,6 +33,7 @@ signals:
 	void signal_dragEnter();
 	void signal_dragLeave();
 	void signal_drop(QStringList pathlist);
+	void signal_musicBox();
 };
 
 

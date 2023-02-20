@@ -1,0 +1,85 @@
+QTextEdit
+{
+    color: rgb(102,102,102);
+    font-size: 13pt;
+    selection-color: black;
+    selection-background-color: white;
+    border-left: 1px solid rgb(255,255,255);
+    border-top:1px solid rgb(255,255,255);
+    border-bottom:1px solid rgb(255,255,255);
+    border-right: 1px solid #f3f3f3;
+}
+
+QScrollBar::vertical
+{
+    background: white;
+    min-width: 8px;
+    min-height: 50px;
+}
+
+QScrollBar::handle:vertical
+{
+    background-color: #f3f3f3;
+    min-height: 50px;
+    max-height: 50px;
+    border-radius: 3px;
+}
+
+QScrollBar::handle:vertical:hover
+{
+    background-color: #dcdcdc;
+    min-height: 50px;
+    max-height: 50px;
+    border-radius: 3px;
+
+}
+
+QScrollBar::sub-page:vertical
+{
+    background: white;
+}
+
+QScrollBar::add-page:vertical
+{
+    background: white;
+}
+
+QWidget#music_playWidget
+{
+    background-color: white;
+    border: none;
+}
+QScrollArea#main_ScrollArea
+{
+    background-color: white;
+    border: none;
+}
+
+QLabel#cd_Button
+{
+    background: transparent;
+}
+
+QLabel#msgLabel0
+{
+    font-size: 30px;
+}
+
+QLabel#msgLabel1,QLabel#msgLabel2,QLabel#msgLabel3
+{
+    color: rgb(55,55,55);
+}
+
+QPushButton#msgButton0,QPushButton#msgButton1,QPushButton#msgButton2
+{
+    border: none;
+    color: rgb(80,125,175);
+    text-align: left;
+}
+
+QPushButton#msgButton0:hover,QPushButton#msgButton1:hover,QPushButton#msgButton2:hover
+{
+    border: none;
+    color: blue;
+    text-align: left;
+}

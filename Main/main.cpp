@@ -7,6 +7,7 @@
 #include "../Common/WindowsInfo.h"
 #include "../Pet/Action.h"
 #include "FirstOpen.h"
+#include "../DogMusic/musicMain.h"
 
 int main(int argc, char *argv[])
 {
@@ -26,5 +27,6 @@ int main(int argc, char *argv[])
 	WindowsInfo* windowsinfo = new WindowsInfo();
 	a.installNativeEventFilter(windowsinfo);
 	patAction->SetWindowsInfoReceive(windowsinfo);	//windowsÏûÏ¢¼àÌı
+	MusicMain::Instance();
 	return a.exec();
 }

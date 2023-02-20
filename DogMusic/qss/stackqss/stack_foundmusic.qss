@@ -1,0 +1,117 @@
+QPushButton#nameButton
+{
+    border: transparent;
+    font: 25px;
+    font-family: "黑体";
+    font-weight: bold;
+    text-align: left;
+}
+
+QPushButton#recommedButton0
+{
+    border-image: url(:/images/listWidget/Personal_Recommendmusic1.png);
+}
+QPushButton#recommedButton1
+{
+    border-image: url(:/images/listWidget/Personal_Recommendmusic2.png);
+}
+QPushButton#recommedButton2
+{
+    border-image: url(:/images/listWidget/Personal_Recommendmusic3.png);
+}
+QPushButton#recommedButton3
+{
+    border-image: url(:/images/listWidget/Personal_Recommendmusic4.png);
+}
+QPushButton#recommedButton4
+{
+    border-image: url(:/images/listWidget/Personal_Recommendmusic5.png);
+}
+
+QPushButton#recommedButton5
+{
+    border:transparent;
+    color: #373737;
+}
+QPushButton#recommedButton5:hover
+{
+    border:transparent;
+    color: #000000;
+}
+QPushButton#recommedButton6
+{
+    border:transparent;
+    color: #373737;
+}
+QPushButton#recommedButton6:hover
+{
+    border:transparent;
+    color: #000000;
+}
+QPushButton#recommedButton7
+{
+    border:transparent;
+    color: #373737;
+}
+QPushButton#recommedButton7:hover
+{
+    border:transparent;
+    color: #000000;
+}
+QPushButton#recommedButton8
+{
+    border:transparent;
+    color: #373737;
+}
+QPushButton#recommedButton8:hover
+{
+    border:transparent;
+    color: #000000;
+}
+QPushButton#recommedButton9
+{
+    border:transparent;
+    color: #373737;
+}
+QPushButton#recommedButton9:hover
+{
+    border:transparent;
+    color: #000000;
+}
+
+QPushButton#btnL
+{
+    border-image: url(:/images/navigation/btn_back.png);
+    border-radius: 12px;
+    background-color: rgba(59,70,68,100);
+}
+
+QPushButton#btnR
+{
+    border-image: url(:/images/navigation/btn_front.png);
+    border-radius: 12px;
+    background-color: rgba(59,70,68,100);
+}
+
+/*Tab基本的设置*/
+QTabBar::tab
+{
+    background: white;
+    border-bottom: 3px solid rgb(255,255,255);
+
+    font-family: "微软雅黑";
+    font-size: 13pt;
+    font-weight: 200;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 20px;
+}
+
+/*Tab选中时*/
+QTabBar::tab:selected
+{
+    border-bottom: 3px solid rgb(235,65,65);
+    color: rgb(55,55,55);
+    font-size: 15pt;
+    font-weight: 590;
+}

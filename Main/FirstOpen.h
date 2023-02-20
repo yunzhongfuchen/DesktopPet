@@ -5,7 +5,7 @@
 #include <QCloseEvent>
 #include <QLabel>
 #include <QPushButton>
-
+#include "../Common/CommomTools.h"
 class FirstOpen  : public QDialog
 {
 	Q_OBJECT

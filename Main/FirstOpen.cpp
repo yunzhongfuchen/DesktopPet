@@ -5,7 +5,6 @@
 #include <QMovie>
 #include <QTimer>
 #include <QDebug>
-#define __QString(str) QString::fromLocal8Bit(str)
 FirstOpen::FirstOpen(QWidget *parent)
 	: QDialog(parent)
 {
