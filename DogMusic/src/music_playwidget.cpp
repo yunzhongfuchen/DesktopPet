@@ -42,6 +42,7 @@ music_play::music_play(QWidget *parent) :
     getSongLyricReply = nullptr;
 
     ConnectInit();
+	InitCD();
 }
 
 void music_play::ConnectInit(void)
@@ -396,7 +397,7 @@ void music_play::LyricUpdate_TimerOut(void)
         iter1 = (iter1 == lrcMap.begin() && iter == lrcMap.end()) ? lrcMap.end() : iter1;
 
         if((time >= iter.key()-100) && (time <= (iter1).key()))//判断一整行歌词的持续时间，这样快进的话，歌词匹配可以快速跟进
-        //if((iter.key()>=time-55) && (iter.key() <= time+55))
+        //if((iter.key()>=time-55) && (iter.key() <= time+55)) 
         {
             if (LyricPosition != iter.key())
             {
@@ -419,11 +420,16 @@ void music_play::LyricUpdate_TimerOut(void)
                 fmt.setFont(QFont("微软雅黑",11,QFont::Bold,false));
                 cursor.mergeCharFormat(fmt);
 
-                //一行的值为34
-                int value = row*SINGLESTEP-SINGLESTEP*4;
-                value = (value < 0) ? 0 : value;
-                value = (value > SINGLESTEP*lrcMap.count() ? SINGLESTEP*lrcMap.count() : value);
-                //按照网易云的样子的话，其实文字选中和滑块滑动要分开计时，触碰滑块后重新计时，但我懒，不想做。。。
+                
+				auto endIter = lrcMap.end();
+				--endIter;
+				float nowTime = row;
+				float endTime = lrcMap.count();
+				int high = lyric_Edit->verticalScrollBar()->minimum()+ SINGLESTEP;	//加一行距离，以免结束时最后一行显示不完
+                int value = int(nowTime / endTime * high);
+                //value = (value < 0) ? 0 : value;
+				qDebug() << lyric_Edit->verticalScrollBar()->maximum();
+				qDebug() << lyric_Edit->verticalScrollBar()->minimum();
                 lyric_Edit->verticalScrollBar()->setValue(value);
             }
             break;
@@ -436,95 +442,80 @@ void music_play::LyricUpdate_TimerOut(void)
 bool music_play::eventFilter(QObject *watched,QEvent *event)
 {
     Q_UNUSED(event);
-
+	static int flag= 0;
     //捕捉cd动画的时间
-    if (watched == this->music_ScrollArea && event->type() == QEvent::Paint)
-    {
-        QPainter painter(this->music_ScrollArea);
-        painter.save();
-        painter.setRenderHint(QPainter::SmoothPixmapTransform);
-        painter.setRenderHint(QPainter::Antialiasing);
 
-        //画黑胶片
-        QPixmap pix;
-        pix.load(":/images/music_play/heijiaopian.png");
-        pix.scaled(350,350);
-        painter.translate(cd_label->pos().rx(),cd_label->pos().ry());
-        painter.translate(cd_label->width()/2,cd_label->height()/2);
-        painter.rotate(cd_rotate);
-        painter.translate(-cd_label->width()/2,-cd_label->height()/2);
-        painter.drawPixmap(0,0,cd_label->width(),cd_label->height(),pix);
+	if (watched == this->music_ScrollArea && event->type() == QEvent::Paint)
+	{
+		QPainter painter(this->music_ScrollArea);
+		painter.save();
+		painter.setRenderHint(QPainter::SmoothPixmapTransform);
+		painter.setRenderHint(QPainter::Antialiasing);
 
-        painter.restore();
+		//画黑胶片
+		painter.translate(cd_label->pos().rx(), cd_label->pos().ry());
+		painter.translate(cd_label->width() / 2, cd_label->height() / 2);
+		painter.rotate(cd_rotate);
+		painter.translate(-cd_label->width() / 2, -cd_label->height() / 2);
+		painter.drawPixmap(0, 0, cd_label->width(), cd_label->height(), pixCD);
 
-        //画黑胶片中间的专辑图片
-        //当加载的图片特别大时，会特别卡。郁闷
+		painter.restore();
 
-        painter.save();
+		//画黑胶片中间的专辑图片
+		//当加载的图片特别大时，会特别卡。郁闷
 
-        QPixmap pix3;
-		if (pixdata == QPixmap())
-		{
-			pix3 = QPixmap(":/images/playWidget/head.png");
-		}
-		else
-		{
-			pix3 = pixdata;
-		}
-        pix3.scaled(226,226);
-        painter.setRenderHint(QPainter::Antialiasing);
-        painter.setRenderHint(QPainter::SmoothPixmapTransform);
-        QPainterPath path;
-        painter.translate(cd_label->pos().rx(),cd_label->pos().ry());
-        path.addEllipse(cd_label->rect().center(),113,113);
-        painter.setClipPath(path);
+		painter.save();
 
-        painter.translate(cd_label->width()/2,cd_label->height()/2);
-        painter.rotate(cd_rotate);
-        painter.translate(-113,-113);
+		painter.setRenderHint(QPainter::Antialiasing);
+		painter.setRenderHint(QPainter::SmoothPixmapTransform);
+		QPainterPath path;
+		painter.translate(cd_label->pos().rx(), cd_label->pos().ry());
+		path.addEllipse(cd_label->rect().center(), 113, 113);
+		painter.setClipPath(path);
 
-        painter.drawPixmap(0,0,226,226,pix3);
+		painter.translate(cd_label->width() / 2, cd_label->height() / 2);
+		painter.rotate(cd_rotate);
+		painter.translate(-113, -113);
 
-        painter.restore();
+		painter.drawPixmap(0, 0, 226, 226, pixAlbum);
 
-//        painter.save();
+		painter.restore();
 
-//        QPixmap pix3;
-//        pix3.loadFromData(pixdata);
-//        pix3.scaled(224,224);
-//        painter.setRenderHint(QPainter::Antialiasing);
-//        painter.setRenderHint(QPainter::SmoothPixmapTransform);
-//        QPainterPath path;
-//        painter.translate(cd_label->pos().rx(),cd_label->pos().ry());
-//        path.addEllipse(cd_label->rect().center(),112,112);
-//        painter.setClipPath(path);
+		//画唱歌杆
+		painter.save();
+		painter.setRenderHint(QPainter::SmoothPixmapTransform);
+		painter.setRenderHint(QPainter::Antialiasing);
 
-//        painter.translate(cd_label->width()/2,cd_label->height()/2);
-//        painter.rotate(cd_rotate);
-//        painter.translate(-112,-112);
+		int x = cd_label->pos().rx() + cd_label->width() / 2 - 150;
+		int y = cd_label->pos().ry() - 195;
+		painter.translate(x, y);
+		painter.translate(150, 150);
+		painter.rotate(bofanggan_rotate);
+		painter.translate(-150, -150);
+		painter.drawPixmap(0, 0, 300, 300, pixRod);
 
-//        painter.drawPixmap(0,0,224,224,pix3);
-
-//        painter.restore();
-
-        //画唱歌杆
-        painter.save();
-        painter.setRenderHint(QPainter::SmoothPixmapTransform);
-        painter.setRenderHint(QPainter::Antialiasing);
-
-        QPixmap pix1;
-        pix1.load(":/images/music_play/bofanggan.png");
-        pix1.scaled(300,300);
-        int x = cd_label->pos().rx()+cd_label->width()/2-150;
-        int y = cd_label->pos().ry()-195;
-        painter.translate(x,y);
-        painter.translate(150,150);
-        painter.rotate(bofanggan_rotate);
-        painter.translate(-150,-150);
-        painter.drawPixmap(0,0,300,300,pix1);
-
-        painter.restore();
-    }
+		painter.restore();
+	}
+	
 
     return 0;
+}
+
+void music_play::InitCD()
+{
+	pixCD.load(":/images/music_play/heijiaopian.png");
+	pixCD.scaled(350, 350);
+
+	if (!pixdata)
+	{
+		pixAlbum = QPixmap(":/images/playWidget/head.png");
+	}
+	else
+	{
+		pixAlbum = pixdata;
+	}
+	pixAlbum.scaled(226, 226);
+	
+	pixRod.load(":/images/music_play/bofanggan.png");
+	pixRod.scaled(300, 300);
 }

@@ -95,5 +95,9 @@
         <file>qss/stackqss/stack_localMusic.qss</file>
         <file>qss/stackqss/stack_findmusic.qss</file>
         <file>images/playWidget/head.png</file>
+        <file>images/playWidget/playmode_one.png</file>
+        <file>images/playWidget/playmode_random.png</file>
+        <file>images/playWidget/playmode_one_hover.png</file>
+        <file>images/playWidget/playmode_random_hover.png</file>
     </qresource>
 </RCC>

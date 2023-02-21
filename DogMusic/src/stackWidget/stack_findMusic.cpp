@@ -359,7 +359,7 @@ void findmusic::findmusic_LayoutInit(void)
 {
     num_label = new QLabel();
     num_label->setObjectName("numlabel");
-    num_label->setText(__QString("找到共0首单曲"));
+    num_label->setText(__QString("请在上方搜索栏输入关键词"));
 
     TabWidget_Init();
 
@@ -378,9 +378,9 @@ void findmusic::TabWidget_Init(void)
     findmusic_tab->setFont(font);
 
     singSong = new QWidget();
-    singer = new QWidget();
+    //singer = new QWidget();
     findmusic_tab->addTab(singSong, __QString("单曲"));
-    findmusic_tab->addTab(singer,__QString("歌手"));
+    //findmusic_tab->addTab(singer,__QString("歌手"));
 
     SingSong_LayoutInit();
 }

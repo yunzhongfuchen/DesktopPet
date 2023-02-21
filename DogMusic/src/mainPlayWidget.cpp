@@ -154,6 +154,9 @@ void mainPlay::PlayCtrlLayout(void)
     play_ctrlButton[0]->setMinimumSize(30,30);
     play_ctrlButton[0]->setMaximumSize(30,30);
     play_ctrlButton[0]->setObjectName("playmodeButton");
+	//QIcon icon0(QPixmap(":/images/playWidget/playmode_favor_nor.png").scaled(20, 20));
+	play_ctrlButton[0]->setStyleSheet("QPushButton{border-image: url(:/images/playWidget/playmode_favor_nor.png);}" 
+		"QPushButton:hover{border-image: url(:/images/playWidget/playmode_favor_hover.png);}");
     //上一首
     play_ctrlButton[1]->setMinimumSize(15,15);
     play_ctrlButton[1]->setMaximumSize(15,15);
@@ -187,7 +190,7 @@ void mainPlay::PlayCtrlLayout(void)
     play_timeLabe[0]->setFixedSize(60,20);
     //总时长
     play_timeLabe[1] = new QLabel();
-    play_timeLabe[1]->setText("03:22");
+    play_timeLabe[1]->setText("00:00");
     play_timeLabe[1]->setFixedSize(60,20);
     //进度条
     play_slider = new QSlider();
@@ -295,18 +298,12 @@ void mainPlay::ConnectInit(void)
     connect(musicPlayer,
             SIGNAL(stateChanged(QMediaPlayer::State)),
             this,SLOT(mediaPlayerStateChanged(QMediaPlayer::State)));
-  /* connect(mediaPlaylist,
-            SIGNAL(currentIndexChanged(int)),
-            this,SLOT(mediaPlaylistCurrentIndexChanged(int)));*/
     connect(musicPlayer,
             SIGNAL(durationChanged(qint64)),
             this,SLOT(musicPlayerDurationChanged(qint64)));
     connect(musicPlayer,
             SIGNAL(positionChanged(qint64)),
             this,SLOT(mediaPlayerPositionChanged(qint64)));
-    /*connect(musicPlayer,
-            SIGNAL(metaDataChanged()),
-            this,SLOT(musicMetaDataChanged()));*/
 	connect(mediaPlaylist, &QMediaPlaylist::currentIndexChanged, this, &mainPlay::musicMetaDataChanged);
     connect(play_slider,
             SIGNAL(sliderReleased()),
@@ -317,8 +314,10 @@ void mainPlay::ConnectInit(void)
             SIGNAL(clicked()),
             this,
             SLOT(btn_playlist_clicked()));
-
-
+	//播放模式切换
+	connect(play_ctrlButton[0], &QPushButton::clicked, this, &mainPlay::PlayModeChange);
+	//音量控制
+	connect(sound_Volume, &QSlider::valueChanged, this, &mainPlay::VolumnChange);
     QWidget *findWnd = nullptr;
     QWidgetList allWidgetlist = QApplication::allWidgets();
     for(QWidget *pwnd : allWidgetlist)
@@ -692,34 +691,8 @@ void mainPlay::GetSingerImage_Reply(int errCode, const QByteArray& bytes, void* 
         icon.addPixmap(pixmap);
         p_mainPlay->musicCoverButton->setIcon(icon);
 
-
-        //将图片传递给旋转CD之前要进行处理，突然太高清，软件会特别卡
-        //pixmap = pixmap.scaled(226, 226, Qt::KeepAspectRatio, Qt::FastTransformation).scaled(226, 226, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-        p_mainPlay->music_playWidget->pixdata =
+        p_mainPlay->music_playWidget->pixAlbum =
                 pixmap.scaled(226, 226, Qt::KeepAspectRatio, Qt::FastTransformation);
-        /*bool isSuccess = pixmap.save("head.jpg","JPEG",100);
-
-        QFile file("head.jpg");
-        qint64 size = file.size();
-
-        int quality = 100;
-        while(size > 9048)
-        {
-            quality = quality - 5;
-            isSuccess = pixmap.save("head.jpg","JPEG",quality);
-
-            size = file.size();
-            qDebug() << "size:" <<size;
-        }
-        pixmap.load("head.jpg");*/
-        //p_mainPlay->music_playWidget->pixdata = pixmap;
-
-        /*QFile file("G:/Linux/UI/cloudmusic/bin/mp3/head.jpg");
-        if (file.open(QIODevice::Truncate|QIODevice::WriteOnly))
-        {
-            file.write(bytes);
-            file.close();
-        }*/
     }
 
     p_mainPlay = nullptr;
@@ -748,15 +721,9 @@ void mainPlay::reply_singimageFinish(QNetworkReply *reply)
 void mainPlay::musicMetaDataChanged(void)
 {
     int index = mediaPlaylist->currentIndex();
-
+	musicplaylist->playlist_table->setCurrentCell(index, QItemSelectionModel::Select);;
     if (mediaObjectInfo.at(index).songSource == LOCALMUSIC)//如果这首歌是本地音乐
     {
-        /*QImage cover = musicPlayer->metaData("ThumbnailImage").value<QImage>();
-
-        QPixmap pixmap = QPixmap::fromImage(cover);
-        QIcon icon;
-        icon.addPixmap(pixmap.scaled(60,60));
-        musicCoverButton->setIcon(icon);*/
 
         QString songname = musicPlayer->metaData(QMediaMetaData::Title).toString();
         music_playWidget->msgLabel[0]->setText(songname);
@@ -932,6 +899,45 @@ bool mainPlay::eventFilter(QObject *watcher,QEvent *event)
     }
     //return QWidget::eventFilter(watcher,event);
     return false;
+}
+
+void mainPlay::PlayModeChange()
+{
+	if (mediaPlaylist->playbackMode() == QMediaPlaylist::Loop)
+	{
+		
+	}
+	switch (mediaPlaylist->playbackMode())
+	{
+	case QMediaPlaylist::Loop:
+		{
+			mediaPlaylist->setPlaybackMode(QMediaPlaylist::Random);
+			play_ctrlButton[0]->setStyleSheet("QPushButton{border-image: url(:/images/playWidget/playmode_random.png);}"
+				"QPushButton:hover{border-image: url(:/images/playWidget/playmode_random_hover.png);}");
+			break;
+		}
+	case QMediaPlaylist::Random:
+		{
+			mediaPlaylist->setPlaybackMode(QMediaPlaylist::CurrentItemInLoop);
+			play_ctrlButton[0]->setStyleSheet("QPushButton{border-image: url(:/images/playWidget/playmode_one.png);}"
+				"QPushButton:hover{border-image: url(:/images/playWidget/playmode_one_hover.png);}");
+			break;
+		}
+	case QMediaPlaylist::CurrentItemInLoop:
+		{
+			mediaPlaylist->setPlaybackMode(QMediaPlaylist::Loop);
+			play_ctrlButton[0]->setStyleSheet("QPushButton{border-image: url(:/images/playWidget/playmode_favor_nor.png);}"
+				"QPushButton:hover{border-image: url(:/images/playWidget/playmode_favor_hover.png);}");
+			break;
+		}
+	default:
+		break;
+	}
+}
+
+void mainPlay::VolumnChange(int vol)
+{
+	musicPlayer->setVolume(vol);
 }
 
 void mainPlay::btn_cover_clicked(void)

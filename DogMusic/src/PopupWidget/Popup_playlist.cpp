@@ -258,11 +258,6 @@ void Pop_playlist::tableClickedMenu_slot(const QPoint &pos)
 
     menu->exec(QCursor::pos());
 
-   /* QTableWidgetItem *item = playlist_table->itemAt(pos);
-    if (item != NULL)
-    {
-        menu->exec(QCursor::pos());
-    }*/
 }
 
 void Pop_playlist::btn_deleteclick_slot(void)

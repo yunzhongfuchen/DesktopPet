@@ -43,7 +43,7 @@ QPushButton#nextSongButton:selected
     border-image: url(:/images/playWidget/next_music_hover.png);
 }
 
-QPushButton#playmodeButton
+/*#playmodeButton
 {
     border-image: url(:/images/playWidget/playmode_favor_nor.png);
 }
@@ -56,7 +56,7 @@ QPushButton#playmodeButton:hover
 QPushButton#playmodeButton:selected
 {
     border-image: url(:/images/playWidget/playmode_favor_hover.png);
-}
+}*/
 
 
 /*qproperty-icon: url(" ");

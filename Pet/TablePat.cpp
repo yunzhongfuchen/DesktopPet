@@ -1,22 +1,14 @@
 #include "TablePat.h"
 #include <QDirIterator>
 #include <QMimeData>
+#include "../DogMusic/musicMain.h"
 
-TablePat* TablePat::tablePat = nullptr;
 
-TablePat* TablePat::Instance(QWidget* parent)
-{
-    if (!tablePat)
-    {
-        tablePat = new TablePat(parent);
-    }
-    return tablePat;
-}
-
-TablePat::TablePat(QWidget *parent)
+TablePat::TablePat(QWidget *parent, int flag)
     : QWidget(parent)
 {
     //ui.setupUi(this);
+	this->flag = flag;
     this->setWindowFlags(Qt::FramelessWindowHint);//Òþ²Ø±êÌâÀ¸
     this->setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint | Qt::Tool);//ÖÃ¶¥
     this->setAttribute(Qt::WA_TranslucentBackground);//Òþ²Ø
@@ -32,19 +24,15 @@ TablePat::TablePat(QWidget *parent)
     this->move((desktopWidth)*0.681, desktopHeight - this->height());
 }
 
-TablePat::~TablePat()
-{
-
-}
-
 void TablePat::SetCurrentbehavior(Currentbehavior behavior)
 {
 	currentbehavior = behavior;
 }
+
 void TablePat::mousePressEvent(QMouseEvent* event)
 {
 	//×ó¼üµã»÷¼ÇÂ¼Î»ÖÃ
-	SignalsCore::Instance()->mousePress();
+	SignalsCore::Instance()->mousePress(flag);
 	if (event->button() == Qt::LeftButton)
 	{
 		diff_ = event->globalPos() - this->pos();
@@ -52,17 +40,31 @@ void TablePat::mousePressEvent(QMouseEvent* event)
 	//ÖÐ¼ü
 	else if (event->button() == Qt::MidButton)
 	{
-		qApp->exit(0);
+		SignalsCore::Instance()->ReducePet();
+		this->close();
 	}
 	else if (event->button() == Qt::RightButton)
 	{
-		SignalsCore::Instance()->musicBox();
+		
+		QMenu *menu = new QMenu(this);
+		menu->setMinimumWidth(150);
+		menu->setAttribute(Qt::WA_DeleteOnClose);
+		QAction* addPet = new QAction(__QString("´ó±ä»îÃ¨"));
+		QAction* music = new QAction(__QString("¹·¹·ÒôÀÖ"));
+		menu->addAction(addPet);
+		menu->addAction(music);
+		connect(music, &QAction::triggered, this, [=] {
+			MusicMain::Instance();
+			SignalsCore::Instance()->musicBox();
+		});
+		connect(addPet, &QAction::triggered, SignalsCore::Instance(), &SignalsCore::AddPet);
+		menu->exec(QCursor::pos());
 	}
 }
 
 void TablePat::mouseReleaseEvent(QMouseEvent* event)
 {
-	SignalsCore::Instance()->mouseRelease(event->button());
+	SignalsCore::Instance()->mouseRelease(event->button(), flag);
 }
 
 void TablePat::mouseMoveEvent(QMouseEvent* event)
@@ -71,7 +73,8 @@ void TablePat::mouseMoveEvent(QMouseEvent* event)
 	if (event->buttons() & Qt::LeftButton)
 	{
 		this->move(event->globalPos() - this->diff_);
-		SignalsCore::Instance()->mouseMove();
+
+		SignalsCore::Instance()->mouseMove(flag);
 	}
 }
 
@@ -86,14 +89,14 @@ void TablePat::dragEnterEvent(QDragEnterEvent *event)
  		if (file.exists())
 		{
 			event->setAccepted(true);
-			SignalsCore::Instance()->dragEnter();
+			SignalsCore::Instance()->dragEnter(flag);
 		}
 	}
 }
 
 void TablePat::dragLeaveEvent(QDragLeaveEvent *event)
 {
-	SignalsCore::Instance()->dragLeave();
+	SignalsCore::Instance()->dragLeave(flag);
 }
 
 void TablePat::dropEvent(QDropEvent *event) 
@@ -105,5 +108,5 @@ void TablePat::dropEvent(QDropEvent *event)
 		QString filepath = url.toLocalFile();
 		pathlist.append(filepath);
 	}
-	SignalsCore::Instance()->drop(pathlist);
+	SignalsCore::Instance()->drop(pathlist, flag);
 }

@@ -25,7 +25,7 @@ class PatAction  : public QWidget
 	Q_OBJECT
 
 public:
-	PatAction(QWidget *parent = nullptr);
+	PatAction(QWidget *parent = nullptr, int flag = 0);
 	~PatAction();
 	TablePat* patInstance;
 	QLabel* movieLab;
@@ -63,7 +63,7 @@ public:
 	void SetPat(TablePat* Instance);
 
 	// 设置Windows消息监听
-	void SetWindowsInfoReceive(WindowsInfo* info);
+	//void SetWindowsInfoReceive(WindowsInfo* info);
 
 	void RunAction(QString gifName, ActionType actionType, int spendTime = 0, QPair<int, int> begin = QPair<int, int>(0, 0), QPair<int, int> end = QPair<int, int>(0, 0), int action = 0);
 
@@ -81,12 +81,12 @@ private:
 
 	void ClearAction();
 
-	/// breaf 播放非移动动画
+	/// breaf 播放其他动画
 	/// 
 	/// gifName gif名称
 	void OtherAction(QString gifName);
 
-	/// breaf 播放面移动动画
+	/// breaf 播放动画
 	/// 
 	/// gifName gif名称
 	/// spendTime 运行时间系数
@@ -102,13 +102,14 @@ private:
 	void GoToWindowTop();
 
 	/// 处理鼠标事件
-	void mousePress();
-	void mouseRelease(Qt::MouseButton btn);
-	void mouseMove();
-	void dragEnter();
-	void dragLeave();
-	void drop(QStringList pathlist);
-	WindowsInfo* windowsInfo = nullptr;
+	void mousePress(int flag);
+	void mouseRelease(Qt::MouseButton btn, int flag);
+	void mouseMove(int flag);
+	void dragEnter(int flag);
+	void dragLeave(int flag);
+	void drop(QStringList pathlist, int flag);
+	int flag;	//行为编号
+	//WindowsInfo* windowsInfo = nullptr;
 
 signals:
 	void lineActionFinish(int action = 0);

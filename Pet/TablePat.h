@@ -46,8 +46,7 @@ class TablePat : public QWidget
     Q_OBJECT
 
 public:
-    static TablePat* Instance(QWidget* parent = nullptr);
-    
+	TablePat(QWidget* parent = nullptr, int flag = 0);
 	QLabel* movieLab;
 
 	/// 设置宠物当前行为
@@ -55,9 +54,8 @@ public:
 	Currentbehavior currentbehavior;
 private:
     //Ui::TablePatClass ui;
-    TablePat(QWidget* parent = nullptr);
-    ~TablePat();
-    static TablePat* tablePat;
+	int flag;	//宠物编号
+
     QPoint diff_;
 
     //重写鼠标事件

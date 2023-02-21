@@ -1,9 +1,10 @@
 #include "Action.h"
 #include <QMessageBox>
 
-PatAction::PatAction(QWidget *parent)
+PatAction::PatAction(QWidget *parent, int flag)
 	: QWidget(parent)
 {
+	this->flag = flag;
 	QDesktopWidget* pDesktopWidget = QApplication::desktop();
 	desktopWidth = pDesktopWidget->availableGeometry().width();
 	desktopHeight = pDesktopWidget->availableGeometry().height();
@@ -28,10 +29,19 @@ PatAction::PatAction(QWidget *parent)
 
 void PatAction::SetPat(TablePat* Instance)
 {
-	patInstance = TablePat::Instance();
+	patInstance = Instance;
 	movieLab = patInstance->movieLab;
-	SetCurrentbehavior(CB_NONE);
-	RunAction(CB_NONE, 3, "hi.gif");
+	if (0 == flag)
+	{
+		SetCurrentbehavior(CB_NONE);
+		RunAction(CB_NONE, 3, "hi.gif");
+	}
+	else
+	{
+		patInstance->move(rand() % (desktopWidth - patInstance->width()), 0);
+		RunAction(CB_DOWN, 15, QString(), qMakePair(patInstance->x(), desktopHeight - patInstance->height()));
+		SetCurrentbehavior(CB_DOWN);
+	}
 	connect(this, &PatAction::lineActionFinish, this, [=](int action)
 	{
 		switch (currentbehavior)
@@ -67,10 +77,10 @@ void PatAction::SetPat(TablePat* Instance)
 	});
 }
 
-void PatAction::SetWindowsInfoReceive(WindowsInfo* info)
-{
-	windowsInfo = info;
-}
+//void PatAction::SetWindowsInfoReceive(WindowsInfo* info)
+//{
+//	windowsInfo = info;
+//}
 
 void PatAction::SetCurrentbehavior(Currentbehavior behavior)
 {
@@ -128,9 +138,7 @@ void PatAction::GoToWindowTop()
 		QVector<int> local = handle.GetWindowLocal(hwndWindow);
 		qDebug() << QCoreApplication::applicationDirPath();
 		// 加载dll
-		QFileInfo file("Dll1.dll");
-		qDebug() << file.absoluteFilePath();
-		QString str = ".//Dll//Dll1.dll";
+		QString str = ".//Dll//Dll2.dll";
 		std::string str1 = str.toStdString(); //QString转为String
 		LPCSTR strdll = str1.c_str();
 		HINSTANCE hDLL = LoadLibraryA(strdll);
@@ -142,7 +150,7 @@ void PatAction::GoToWindowTop()
 			if (! p(patHwnd))
 			{
 				qDebug() << "hook backcall Hwnd set failed";
-				QMessageBox::warning(this, "warning", "hook backcall Hwnd set failed");
+				//QMessageBox::warning(this, "warning", "hook backcall Hwnd set failed");
 			}
 			else
 			{
@@ -158,28 +166,28 @@ void PatAction::GoToWindowTop()
 					qDebug() << "----" << GetWindowThreadProcessId(hwndWindow, (LPDWORD)&ID) << "    " << ID;
 					SetCurrentbehavior(CB_TOWINDOWSTOP);
 					RunAction(CB_TOWINDOWSTOP, 15, QString(), qMakePair(local[2] + rand() % (local[3] - local[2] - patInstance->width()), local[0] - patInstance->height()));
-					windowsInfo->SetHWND(hwndWindow);
-					windowsInfo->SetOpen(true);
+					SignalsCore::Instance()->SetWindowInfoReceive(true);
 					connect(SignalsCore::Instance(), &SignalsCore::signal_windowChange, this, [=]()
 					{
 						RunAction(CB_DOWN, 15, QString(), qMakePair(patInstance->x(), desktopHeight - patInstance->height()));
 						SetCurrentbehavior(CB_DOWN);
-						windowsInfo->SetOpen(false);
+						SignalsCore::Instance()->SetWindowInfoReceive(false);
 						UnhookWindowsHookEx(hhook);
+						disconnect(SignalsCore::Instance(), &SignalsCore::signal_windowChange, this, 0);
 					});
 					return;
 				}
 				else
 				{
 					qDebug() << "dll insert failed";
-					QMessageBox::warning(this, "warning", "dll insert failed");
+					//QMessageBox::warning(this, "warning", "dll insert failed");
 				}
 			}
 		}
 		else
 		{
 			qDebug() << "dll加载失败";
-			QMessageBox::warning(this, "warning", "dll add failed");
+			//QMessageBox::warning(this, "warning", "dll add failed");
 		}
 	}
 	emit lineActionFinish();
@@ -358,8 +366,12 @@ bool PatAction::FindSuitWindow(HWND &hwndOut)
 	return false;
 }
 
-void PatAction::mouseRelease(Qt::MouseButton btn)
+void PatAction::mouseRelease(Qt::MouseButton btn, int flag)
 {
+	if (this->flag != flag)
+	{
+		return;
+	}
 	if (patInstance->x() <= 0)
 	{
 		SetCurrentbehavior(CB_SUSPENSION);
@@ -382,8 +394,12 @@ void PatAction::mouseRelease(Qt::MouseButton btn)
 	}
 }
 
-void PatAction::mouseMove()
+void PatAction::mouseMove(int flag)
 {
+	if (this->flag != flag)
+	{
+		return;
+	}
 	//左键移动
 	if (nowGif != dragMap["push.gif"])
 	{
@@ -392,20 +408,32 @@ void PatAction::mouseMove()
 	}
 }
 
-void PatAction::dragEnter()
+void PatAction::dragEnter(int flag)
 {
+	if (this->flag != flag)
+	{
+		return;
+	}
 	SetCurrentbehavior(CB_EAT);
 	RunAction(CB_EAT, 0, "happy.gif");
 }
 
-void PatAction::dragLeave()
+void PatAction::dragLeave(int flag)
 {
+	if (this->flag != flag)
+	{
+		return;
+	}
 	RunAction(CB_EAT, 3, "cry.gif");
 	SetCurrentbehavior(CB_NONE);
 }
 
-void PatAction::drop(QStringList pathlist)
+void PatAction::drop(QStringList pathlist, int flag)
 {
+	if (this->flag != flag)
+	{
+		return;
+	}
 	static int eatNum = 0;
 	bool allFile = true;
 	bool allDir = true;

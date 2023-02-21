@@ -75,7 +75,7 @@ private:
     void BlockInit(void);
     void MsgLayout(void);
 
-
+	void InitCD();
 private:
     QHBoxLayout *music_playlayout;
 
@@ -108,7 +108,10 @@ private:
     int cd_rotate;          //cd旋转角度
     int bofanggan_rotate;   //播放杆旋转角度
     int LyricPosition;      //歌词位置
-
+	
+	QPixmap pixCD;	//画黑胶片
+	QPixmap pixAlbum;	//专辑图片
+	QPixmap pixRod;
     //网络部分
     QNetworkAccessManager Manager;
     QNetworkReply *getSongLyricReply;

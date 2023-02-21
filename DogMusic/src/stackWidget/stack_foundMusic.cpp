@@ -38,7 +38,7 @@ void foundmusic::TabWidgetLayout(void)
     list_tabWidget->setFont(font);
 
     list_tabWidget->addTab(personal, __QString("狗性推荐"));
-    list_tabWidget->addTab(SongSheet, __QString("歌单"));
+    list_tabWidget->addTab(SongSheet, __QString("汪单"));
     list_tabWidget->addTab(anchorStation, __QString("狗播电台"));
     list_tabWidget->addTab(Ranklist, __QString("排狗榜"));
     list_tabWidget->addTab(Singer, __QString("狗手"));
@@ -90,7 +90,7 @@ void foundmusic::Recommendation()
     QPushButton *RecommendButton = new QPushButton();
     RecommendButton->setMinimumSize(150,40);
     RecommendButton->setMaximumSize(150,40);
-    RecommendButton->setText(__QString("推荐歌单>"));
+    RecommendButton->setText(__QString("推荐汪单>"));
     RecommendButton->setObjectName("nameButton");
 
     QSpacerItem *RecommendSpacer = new QSpacerItem(600,30,

@@ -6,7 +6,7 @@ QVector<HWND> GetWindowsHandle::handleVector = QVector<HWND>();
 WindowsInfo::WindowsInfo(QWidget *parent)
 	: QWidget(parent)
 {
-	
+	connect(SignalsCore::Instance(), &SignalsCore::signal_SetWindowInfoReceive, this, &WindowsInfo::SetOpen);
 }
 
 WindowsInfo::~WindowsInfo()
@@ -16,26 +16,15 @@ bool WindowsInfo::nativeEventFilter(const QByteArray & eventType, void * message
 {
 	if (open)
 	{
-		/*if (eventType == "windows_generic_MSG" || eventType == "windows_dispatcher_MSG")
-		{*/
+		if (eventType == "windows_generic_MSG" || eventType == "windows_dispatcher_MSG")
+		{
 			MSG * pMsg = reinterpret_cast<MSG *>(message);
-			/*char title[MAXBYTE];
-			GetWindowTextA(checkHwnd, title, MAXBYTE);
-			qDebug() << QString::fromLocal8Bit(title);*/
-			/*if (pMsg->hwnd == checkHwnd)
-			{
-				qDebug() << "pMsg->message:" << pMsg->message;
-			}*/
-			
 				if (pMsg->message == WM_KEYDOWN)
 				{
-
-					//获取到系统鼠标移动，可以做像qq一样的忙碌检测
-					qDebug() << "nativeEventFilter:" << pMsg->wParam;
+					//qDebug() << "nativeEventFilter:" << pMsg->wParam;
 					SignalsCore::Instance()->windowChange();
 				}
-			
-		//}
+		}
 	}
 
 	return false;

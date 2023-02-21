@@ -140,6 +140,10 @@ private slots:
     void on_psEvent_findmusicNextPlay(MediaObjectInfo info,QString url);
     //获取歌手照片事件
     void reply_singimageFinish(QNetworkReply *reply);
+	//播放模式切换
+	void PlayModeChange();
+	//音量大小改变
+	void VolumnChange(int vol);
 protected:
     //大小变化
     void resizeEvent(QResizeEvent *e);
