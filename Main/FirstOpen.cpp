@@ -78,40 +78,33 @@ void FirstOpen::BeginCourse()
 	{
 	case 0:
 		info = __QString("宠物会在桌面下方自由运动");
-		movPath = ":/TablePatOther/gif/other/teachone.gif";
+		movPath = ":/none/gif/none//teachone.gif";
 		time = 3;
 		break;
 	case 1:
 		info = __QString("当然，有的时候也喜欢待在高处，这很合理，不是吗");
-		movPath = ":/TablePatOther/gif/other/teachtwo.gif";
+		movPath = ":/none/gif/none//teachtwo.gif";
 		time = 5;
 		break;
 	case 2:
 		info = __QString("如果你不想让它乱跑，也可以把它挂在边上");
-		movPath = ":/TablePatOther/gif/other/teachthree.gif";
-		time = 4;
+		movPath = ":/none/gif/none//teachthree.gif";
+		time = 3;
 		break;
 	case 3:
 		info = __QString("你有不想要的文件，它也可以帮你吃掉");
-		movPath = ":/TablePatOther/gif/other/teachfore.gif";
+		movPath = ":/none/gif/none//teachfore.gif";
 		time = 17;
 		break;
 	case 4:
-		if (file.exists())
-		{
-			file.open(QIODevice::ReadOnly | QIODevice::Text);
-			info = file.readLine().toStdString().c_str();
-			m_text2->setText(file.readLine().toStdString().c_str());
-			file.close();
-		}
-		else
-		{
-			info = __QString("最后，在这个时间点，当然是要对你说");
-			m_text2->setText(__QString("祝你永远青春健康，快快乐乐每一天！"));
-		}
-		movPath = ":/TablePatOther/gif/other/newyear.gif";
-		m_next->setText(__QString("完成"));
-		time = 5;
+		info = __QString("鼠标中键干掉宠物（你真的忍心吗）");
+		movPath = ":/none/Gif/none/teachfive.gif";
+		time = 3;
+		break;
+	case 5:
+		info = __QString("鼠标右键打开菜单，有很多意想不到但还没开始做的功能");
+		movPath = ":/none/Gif/none/teachsix.gif";
+		time = 3;
 		break;
 	default:
 		this->reject();
@@ -133,6 +126,14 @@ void FirstOpen::BeginCourse()
 			QPalette pe;
 			pe.setColor(QPalette::WindowText, Qt::green);
 			m_text2->setPalette(pe);
+		}
+		else
+		{
+			m_text2->setVisible(false);
+		}
+		if (flag == 6)
+		{
+			m_next->setText(__QString("完成"));
 		}
 		m_next->setVisible(true);
 	});

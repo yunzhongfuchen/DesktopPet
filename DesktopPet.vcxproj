@@ -86,37 +86,13 @@
     <ClCompile Include="Common\CommomTools.cpp" />
     <ClCompile Include="Common\Signals.cpp" />
     <ClCompile Include="Common\WindowsInfo.cpp" />
-    <ClCompile Include="DogMusic\Database\dbManager.cpp" />
-    <ClCompile Include="DogMusic\Event\MusicSignals.cpp" />
-    <ClCompile Include="DogMusic\Event\PSEventController.cpp" />
-    <ClCompile Include="DogMusic\musicMain.cpp" />
-    <ClCompile Include="DogMusic\NetWork\NetWorkManager.cpp" />
-    <ClCompile Include="DogMusic\src\mainPlayWidget.cpp" />
-    <ClCompile Include="DogMusic\src\mainwindow.cpp" />
-    <ClCompile Include="DogMusic\src\main_listWidget.cpp" />
-    <ClCompile Include="DogMusic\src\main_navigation.cpp" />
-    <ClCompile Include="DogMusic\src\music_playwidget.cpp" />
-    <ClCompile Include="DogMusic\src\PopupWidget\Popup_playlist.cpp" />
-    <ClCompile Include="DogMusic\src\stackWidget\stack_findMusic.cpp" />
-    <ClCompile Include="DogMusic\src\stackWidget\stack_foundMusic.cpp" />
-    <ClCompile Include="DogMusic\src\stackWidget\stack_localMusic.cpp" />
-    <ClCompile Include="DogMusic\src\stackWidget\stack_sheetMusic.cpp" />
-    <ClCompile Include="DogMusic\src\stackWidget\stack_video.cpp" />
-    <ClCompile Include="DogMusic\ThirdParty\pagenavigator.cpp" />
-    <ClCompile Include="DogMusic\ThirdParty\picturebutton.cpp" />
-    <ClCompile Include="DogMusic\ThirdParty\pictureitem.cpp" />
-    <ClCompile Include="DogMusic\ThirdParty\pictureview.cpp" />
-    <ClCompile Include="DogMusic\ThirdParty\picturewidget.cpp" />
     <ClCompile Include="Main\FirstOpen.cpp" />
     <ClCompile Include="Main\main.cpp" />
     <ClCompile Include="Pet\Action.cpp" />
     <ClCompile Include="Pet\DesktopPet.cpp" />
     <ClCompile Include="Pet\TablePat.cpp" />
     <QtRcc Include="DesktopPet.qrc" />
-    <QtRcc Include="DogMusic\res.qrc" />
     <QtUic Include="DesktopPet.ui" />
-    <QtUic Include="DogMusic\Event\MusicSignals.ui" />
-    <QtUic Include="DogMusic\ui\picturewidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Pet\DesktopPet.h" />
@@ -132,48 +108,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\CommomTools.h" />
-    <QtMoc Include="DogMusic\Database\dbManager.h" />
-    <ClInclude Include="DogMusic\Event\EventType_global.h" />
-    <QtMoc Include="DogMusic\Event\PSEventController.h" />
-    <QtMoc Include="DogMusic\lib\main_listWidget.h" />
-    <QtMoc Include="DogMusic\lib\main_navigation.h" />
-    <QtMoc Include="DogMusic\lib\mainPlayWidget.h" />
-    <QtMoc Include="DogMusic\lib\mainTabWidget.h" />
-    <QtMoc Include="DogMusic\lib\mainwindow.h" />
-    <QtMoc Include="DogMusic\lib\music_playwidget.h" />
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_findMusic.h" />
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_foundMusic.h" />
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_localMusic.h" />
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_video.h" />
-    <QtMoc Include="DogMusic\lib\PopupWidget\Popup_playlist.h" />
-    <QtMoc Include="DogMusic\NetWork\NetWorkManager.h" />
-    <QtMoc Include="DogMusic\ThirdParty\pagenavigator.h" />
-    <QtMoc Include="DogMusic\ThirdParty\picturebutton.h" />
-    <QtMoc Include="DogMusic\ThirdParty\pictureitem.h" />
-    <QtMoc Include="DogMusic\ThirdParty\pictureview.h" />
-    <QtMoc Include="DogMusic\ThirdParty\picturewidget.h" />
-    <QtMoc Include="DogMusic\musicMain.h" />
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_sheetMusic.h" />
-    <QtMoc Include="DogMusic\Event\MusicSignals.h" />
-    <ClInclude Include="DogMusic\lib\Widget_global.h" />
-    <ClInclude Include="resource.h" />
     <QtMoc Include="Common\WindowsInfo.h" />
     <QtMoc Include="Common\Signals.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DesktopPet.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DogMusic\main_listWidget.qss" />
-    <None Include="DogMusic\qss\main_playWidget.qss" />
-    <None Include="DogMusic\qss\music_playWidget.qss" />
-    <None Include="DogMusic\qss\popqss\pop_playlist.qss" />
-    <None Include="DogMusic\qss\stackqss\stack_findmusic.qss" />
-    <None Include="DogMusic\qss\stackqss\stack_foundmusic.qss" />
-    <None Include="DogMusic\qss\stackqss\stack_localMusic.qss" />
-    <None Include="DogMusic\qss\stackqss\stack_localMusicDialog.qss" />
-    <None Include="DogMusic\qss\stackqss\stack_video.qss" />
-    <None Include="DogMusic\style.qss" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

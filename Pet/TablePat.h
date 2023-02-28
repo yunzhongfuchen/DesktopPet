@@ -14,6 +14,7 @@
 
 #include "windows.h" 
 #include "../Common/Signals.h"
+#include "../Common/CommomTools.h"
 
 enum ActionType
 {
@@ -55,7 +56,6 @@ public:
 private:
     //Ui::TablePatClass ui;
 	int flag;	//宠物编号
-
     QPoint diff_;
 
     //重写鼠标事件

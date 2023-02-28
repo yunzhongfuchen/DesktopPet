@@ -1,7 +1,9 @@
 #include "TablePat.h"
 #include <QDirIterator>
 #include <QMimeData>
-#include "../DogMusic/musicMain.h"
+#include <QProcess>
+#include <QAction>
+#include <QMenu>
 
 
 TablePat::TablePat(QWidget *parent, int flag)
@@ -53,9 +55,14 @@ void TablePat::mousePressEvent(QMouseEvent* event)
 		QAction* music = new QAction(__QString("狗狗音乐"));
 		menu->addAction(addPet);
 		menu->addAction(music);
+		static QProcess* m_process = new QProcess();
 		connect(music, &QAction::triggered, this, [=] {
-			MusicMain::Instance();
-			SignalsCore::Instance()->musicBox();
+			//启动音乐
+			//先将music生成exe，再调用exe，不在运行时构建
+			/*MusicMain::Instance();
+			SignalsCore::Instance()->musicBox();*/
+			QString cmdstr = QString("%1/../../Dll/DogMusic/cloudmusic.exe").arg(qApp->applicationDirPath());
+			m_process->start(cmdstr);
 		});
 		connect(addPet, &QAction::triggered, SignalsCore::Instance(), &SignalsCore::AddPet);
 		menu->exec(QCursor::pos());

@@ -23,57 +23,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{854d2f92-7fde-4b17-b943-3ca5388ca69e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="DogMusic">
-      <UniqueIdentifier>{49f7636d-bbfe-4908-a75e-002fbad0884a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\Database">
-      <UniqueIdentifier>{a0f0725d-dcfe-4fbc-a20e-3ddbbfe5e394}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\Event">
-      <UniqueIdentifier>{22fee92a-7556-4f04-9c91-5ecc3d630bcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\images">
-      <UniqueIdentifier>{2f571e4d-6efc-4ef0-92f8-ccc990cf58ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\lib">
-      <UniqueIdentifier>{44e8bd4d-10bb-4146-aa31-0cf2f4e9340a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\mp3">
-      <UniqueIdentifier>{43f4db95-9c2b-4cf0-bee4-80b1da5d36ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\NetWork">
-      <UniqueIdentifier>{bf094c54-4328-400b-b75e-c7d065dfc4f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\qss">
-      <UniqueIdentifier>{25b0f792-abe4-4362-b754-e719f4219eb3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\src">
-      <UniqueIdentifier>{58440ee3-0dd8-4e70-9019-ec4e299f2c04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\ThirParty">
-      <UniqueIdentifier>{3e915222-aecf-497f-b562-1cda595622f2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\ui">
-      <UniqueIdentifier>{040e3d58-91b9-452b-b9f0-dd4ad457ca8c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\lib\PopupWidget">
-      <UniqueIdentifier>{2a76363a-b626-41cd-82ee-5266663f174d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\lib\stackWidget">
-      <UniqueIdentifier>{7c0a0589-09f2-4353-9961-edfb81e8354f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\src\PopupWidget">
-      <UniqueIdentifier>{36a9ada6-3055-4909-b43b-aa11f800315e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\src\stackWidget">
-      <UniqueIdentifier>{821d4bf5-feae-414b-8b9c-ec4aa4a72edb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\qss\stackqss">
-      <UniqueIdentifier>{ebe8619d-f479-43a6-bda9-b9ee95d2f1cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DogMusic\qss\popqss">
-      <UniqueIdentifier>{0df996c5-0694-4e58-8785-19572050bb42}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="DesktopPet.qrc">
@@ -82,9 +31,6 @@
     <QtUic Include="DesktopPet.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtRcc Include="DogMusic\res.qrc">
-      <Filter>DogMusic</Filter>
-    </QtRcc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Pet\DesktopPet.cpp">
@@ -111,69 +57,6 @@
     <ClCompile Include="Common\WindowsInfo.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="DogMusic\Event\PSEventController.cpp">
-      <Filter>DogMusic\Event</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\NetWork\NetWorkManager.cpp">
-      <Filter>DogMusic\NetWork</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\ThirdParty\pagenavigator.cpp">
-      <Filter>DogMusic\ThirParty</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\ThirdParty\picturebutton.cpp">
-      <Filter>DogMusic\ThirParty</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\ThirdParty\pictureitem.cpp">
-      <Filter>DogMusic\ThirParty</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\ThirdParty\pictureview.cpp">
-      <Filter>DogMusic\ThirParty</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\ThirdParty\picturewidget.cpp">
-      <Filter>DogMusic\ThirParty</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\stackWidget\stack_findMusic.cpp">
-      <Filter>DogMusic\src\stackWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\stackWidget\stack_foundMusic.cpp">
-      <Filter>DogMusic\src\stackWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\stackWidget\stack_localMusic.cpp">
-      <Filter>DogMusic\src\stackWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\stackWidget\stack_video.cpp">
-      <Filter>DogMusic\src\stackWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\PopupWidget\Popup_playlist.cpp">
-      <Filter>DogMusic\src\PopupWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\main_listWidget.cpp">
-      <Filter>DogMusic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\main_navigation.cpp">
-      <Filter>DogMusic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\mainPlayWidget.cpp">
-      <Filter>DogMusic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\music_playwidget.cpp">
-      <Filter>DogMusic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\Database\dbManager.cpp">
-      <Filter>DogMusic\Database</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\musicMain.cpp">
-      <Filter>DogMusic</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\mainwindow.cpp">
-      <Filter>DogMusic\src</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\src\stackWidget\stack_sheetMusic.cpp">
-      <Filter>DogMusic\src\stackWidget</Filter>
-    </ClCompile>
-    <ClCompile Include="DogMusic\Event\MusicSignals.cpp">
-      <Filter>DogMusic\Event</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Pet\DesktopPet.h">
@@ -194,128 +77,15 @@
     <QtMoc Include="Common\WindowsInfo.h">
       <Filter>Common</Filter>
     </QtMoc>
-    <QtMoc Include="DogMusic\Event\PSEventController.h">
-      <Filter>DogMusic\Event</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\main_listWidget.h">
-      <Filter>DogMusic\lib</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\main_navigation.h">
-      <Filter>DogMusic\lib</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\mainPlayWidget.h">
-      <Filter>DogMusic\lib</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\mainTabWidget.h">
-      <Filter>DogMusic\lib</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\mainwindow.h">
-      <Filter>DogMusic\lib</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\music_playwidget.h">
-      <Filter>DogMusic\lib</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_findMusic.h">
-      <Filter>DogMusic\lib\stackWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_foundMusic.h">
-      <Filter>DogMusic\lib\stackWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_localMusic.h">
-      <Filter>DogMusic\lib\stackWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_video.h">
-      <Filter>DogMusic\lib\stackWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\PopupWidget\Popup_playlist.h">
-      <Filter>DogMusic\lib\PopupWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\NetWork\NetWorkManager.h">
-      <Filter>DogMusic\NetWork</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\ThirdParty\pagenavigator.h">
-      <Filter>DogMusic\ThirParty</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\ThirdParty\picturebutton.h">
-      <Filter>DogMusic\ThirParty</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\ThirdParty\pictureitem.h">
-      <Filter>DogMusic\ThirParty</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\ThirdParty\pictureview.h">
-      <Filter>DogMusic\ThirParty</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\ThirdParty\picturewidget.h">
-      <Filter>DogMusic\ThirParty</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\Database\dbManager.h">
-      <Filter>DogMusic\Database</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\musicMain.h">
-      <Filter>DogMusic</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\lib\stackWidget\stack_sheetMusic.h">
-      <Filter>DogMusic\lib\stackWidget</Filter>
-    </QtMoc>
-    <QtMoc Include="DogMusic\Event\MusicSignals.h">
-      <Filter>DogMusic\Event</Filter>
-    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\CommomTools.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="DogMusic\Event\EventType_global.h">
-      <Filter>DogMusic\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="DogMusic\lib\Widget_global.h">
-      <Filter>DogMusic\lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DesktopPet.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DogMusic\main_listWidget.qss">
-      <Filter>DogMusic</Filter>
-    </None>
-    <None Include="DogMusic\style.qss">
-      <Filter>DogMusic</Filter>
-    </None>
-    <None Include="DogMusic\qss\main_playWidget.qss">
-      <Filter>DogMusic\qss</Filter>
-    </None>
-    <None Include="DogMusic\qss\music_playWidget.qss">
-      <Filter>DogMusic\qss</Filter>
-    </None>
-    <None Include="DogMusic\qss\stackqss\stack_findmusic.qss">
-      <Filter>DogMusic\qss\stackqss</Filter>
-    </None>
-    <None Include="DogMusic\qss\stackqss\stack_foundmusic.qss">
-      <Filter>DogMusic\qss\stackqss</Filter>
-    </None>
-    <None Include="DogMusic\qss\stackqss\stack_localMusic.qss">
-      <Filter>DogMusic\qss\stackqss</Filter>
-    </None>
-    <None Include="DogMusic\qss\stackqss\stack_localMusicDialog.qss">
-      <Filter>DogMusic\qss\stackqss</Filter>
-    </None>
-    <None Include="DogMusic\qss\stackqss\stack_video.qss">
-      <Filter>DogMusic\qss\stackqss</Filter>
-    </None>
-    <None Include="DogMusic\qss\popqss\pop_playlist.qss">
-      <Filter>DogMusic\qss\popqss</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="DogMusic\ui\picturewidget.ui">
-      <Filter>DogMusic\ui</Filter>
-    </QtUic>
-    <QtUic Include="DogMusic\Event\MusicSignals.ui">
-      <Filter>DogMusic\Event</Filter>
-    </QtUic>
   </ItemGroup>
 </Project>
