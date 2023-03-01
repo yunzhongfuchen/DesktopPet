@@ -20,6 +20,7 @@ DesktopPet::DesktopPet(QWidget *parent)
 		--petNum;
 		if (petNum <= 0)
 		{
+			SignalsCore::Instance()->EndPet();
 			qApp->exit(0);
 		}
 	});

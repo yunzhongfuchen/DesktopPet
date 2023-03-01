@@ -28,6 +28,8 @@ public slots:
 	void ReducePet();
 	//	是否监听windows消息
 	void SetWindowInfoReceive(bool isOpen);
+	//	结束程序
+	void EndPet();
 signals:
 	void signal_windowChange();
 
@@ -40,8 +42,9 @@ signals:
 
 	void signal_musicBox();
 	void signal_AddPet();
-	void signal_ReducePet();
+	void signal_ReducePet(); 
 	void signal_SetWindowInfoReceive(bool isOpen);
+	void signal_EndPet();
 };
 
 

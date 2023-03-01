@@ -9,16 +9,16 @@ PatAction::PatAction(QWidget *parent, int flag)
 	desktopWidth = pDesktopWidget->availableGeometry().width();
 	desktopHeight = pDesktopWidget->availableGeometry().height();
 
-	InitActionMap("Gif/random/random_dot", randomDotMap, randomDotList);
-	InitActionMap("Gif/random/random_move/left", randomMoveLeftMap, randomMoveLeftList);
-	InitActionMap("Gif/random/random_move/right", randomMoveRightMap, randomMoveRightList);
-	InitActionMap("Gif/eat", eatMap, eatList);
-	InitActionMap("Gif/drag", dragMap, dragList);
-	InitActionMap("Gif/suspension", suspensionMap, suspensionList);
-	InitActionMap("Gif/down", downMap, downList);
-	InitActionMap("Gif/ontop", onTopMap, onTopList);
-	InitActionMap("Gif/towindowstop", toWindowsTopMap, toWindowsTopList);
-	InitActionMap("Gif/none", noneMap, noneList);
+	InitActionMap("./Gif/random/random_dot", randomDotMap, randomDotList);
+	InitActionMap("./Gif/random/random_move/left", randomMoveLeftMap, randomMoveLeftList);
+	InitActionMap("./Gif/random/random_move/right", randomMoveRightMap, randomMoveRightList);
+	InitActionMap("./Gif/eat", eatMap, eatList);
+	InitActionMap("./Gif/drag", dragMap, dragList);
+	InitActionMap("./Gif/suspension", suspensionMap, suspensionList);
+	InitActionMap("./Gif/down", downMap, downList);
+	InitActionMap("./Gif/ontop", onTopMap, onTopList);
+	InitActionMap("./Gif/towindowstop", toWindowsTopMap, toWindowsTopList);
+	InitActionMap("./Gif/none", noneMap, noneList);
 	//connect(SignalsCore::Instance(), &SignalsCore::signal_mousePress, this, &PatAction::mousePress);
 	connect(SignalsCore::Instance(), &SignalsCore::signal_mouseRelease, this, &PatAction::mouseRelease);
 	connect(SignalsCore::Instance(), &SignalsCore::signal_mouseMove, this, &PatAction::mouseMove);
@@ -138,7 +138,7 @@ void PatAction::GoToWindowTop()
 		QVector<int> local = handle.GetWindowLocal(hwndWindow);
 		qDebug() << QCoreApplication::applicationDirPath();
 		// ¼ÓÔØdll
-		QString str = ".//Dll//Dll2.dll";
+		QString str = "./Dll/Dll2.dll";
 		std::string str1 = str.toStdString(); //QString×ªÎªString
 		LPCSTR strdll = str1.c_str();
 		HINSTANCE hDLL = LoadLibraryA(strdll);

@@ -64,3 +64,8 @@ void SignalsCore::SetWindowInfoReceive(bool isOpen)
 {
 	emit signal_SetWindowInfoReceive(isOpen);
 }
+
+void SignalsCore::EndPet()
+{
+	emit signal_EndPet();
+}

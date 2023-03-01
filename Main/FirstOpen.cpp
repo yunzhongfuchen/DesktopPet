@@ -32,6 +32,7 @@ FirstOpen::FirstOpen(QWidget *parent)
 
 	m_text2 = new QLabel(this);
 	m_text2->setFont(font);
+	m_text2->setVisible(false);
 	m_movieLab = new QLabel(this);
 	m_movieLab->setFixedSize(566, 282);
 	m_movieLab->setVisible(false);
@@ -97,6 +98,7 @@ void FirstOpen::BeginCourse()
 		time = 17;
 		break;
 	case 4:
+		m_text2->setVisible(false);
 		info = __QString("鼠标中键干掉宠物（你真的忍心吗）");
 		movPath = ":/none/Gif/none/teachfive.gif";
 		time = 3;
@@ -123,13 +125,10 @@ void FirstOpen::BeginCourse()
 		if (flag == 4)
 		{
 			m_text2->setText(__QString("温馨提示：请不要暴饮暴食"));
+			m_text2->setVisible(true);
 			QPalette pe;
 			pe.setColor(QPalette::WindowText, Qt::green);
 			m_text2->setPalette(pe);
-		}
-		else
-		{
-			m_text2->setVisible(false);
 		}
 		if (flag == 6)
 		{
